@@ -1,0 +1,13 @@
+<%= @q.errors.full_messages.join(", ") %>
+<%= form_for @q do |f| %>
+  <div class="form-group">
+    <%= f.label(:title) %>
+    <%= f.text_field(:title, {class: "form-control"}) %>
+    <p class="help-block">Please limit your title to 255 characters.</p>
+  </div>
+  <div class="form-group">
+    <%= f.label(:body) %>
+    <%= f.text_area(:body, class: "form-control") %>
+  </div>
+    <%= f.submit ({class: "btn btn-primary"}) %>
+    <% end %>

@@ -1,0 +1,50 @@
+<h1><%= @q.title %></h1>
+
+<p>
+  created by <%= @q.user.full_name %>
+</p>
+
+<div>
+  <%= @q.body %>
+</div>
+<%#= link_to "Edit", edit_question_path({id: @q.id}) %>
+<% if can? :edit, @q %>
+  <%= link_to "Edit", edit_question_path(@q), class: "btn btn-info btn-sm" %>
+<% end %>
+
+<% if can? :destroy, @q %>
+  <%= link_to("Delete", question_path(@q), {method: :delete, class: "btn btn-danger btn-sm", data: {confirm: "Are you sure?"}}) %>
+<% end %>
+
+<!-- to add a form for answers, we have to instantiate an empty Answer object but it is being shown on question/show,
+it has to be deifned in questions controller show action -->
+
+<!-- the form without url would not work becasue by default the form would submit  -->
+<!-- to answers path but it has not be defined/persisted.
+for_form @answer, the action will be answers_path if @answer is not persisted
+in the database (meaning it's just Answer.new).
+if  @answer is persisted, the action will be: answer_path(@answer) -->
+
+<h2>Submit an Answer</h2>
+
+<%= @answer.errors.full_messages.join(" AND/OR ") %>
+
+<%= form_for [@q, @answer] do |f| %>
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+
+<h2>Answers</h2>
+
+<% @q.answers.each do |answer| %>
+  <div class="well">
+  <%= answer.body  %>
+  <% if can? :destroy, answer %>
+    <%= link_to "Delete", question_answer_path(@q, answer), method: :delete, data: {confirm: "Are you sure you want to delete this answer?"}, class: "btn btn-danger"%>
+  <% end %>
+  </div>
+<% end %>

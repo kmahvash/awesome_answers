@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      nav {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default" style="font-size:14px;">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="<%= root_path %>"><span class='glyphicon glyphicon-home'></span> Home</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><%= link_to "<span class='glyphicon glyphicon-th-list'></span> All Questions".html_safe, questions_path %></li>
+            <li><%= link_to "<span class='glyphicon glyphicon-plus'></span> New Question".html_safe, new_question_path %></li>
+            <% if user_signed_in? %>
+              <li><span class='glyphicon glyphicon-user'></span> Hello <%= current_user.first_name %>! </li>
+              <li> <%= link_to "Log Out", sessions_path, method: :delete %> </li>
+            <% else %>
+              <li> <%= link_to "Sign Up", new_user_path %> </li>
+              <li> <%= link_to "Sign In", new_session_path %> </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </body>
+</html>
